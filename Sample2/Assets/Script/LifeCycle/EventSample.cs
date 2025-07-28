@@ -87,7 +87,5 @@ public class EventSample : MonoBehaviour
 
         // 후처리 작업에 사용됩니다.
 
-        // LateUpdate가 여러개일 경우 
-
     }
 }
