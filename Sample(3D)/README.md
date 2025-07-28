@@ -35,6 +35,7 @@ Unity BootCamp 14th Projects
 ### GameObject
 + GetComponant<T>
   + GameObject Componant의 Data를 호출
+  + 이 기능을 통해 받아오는 값 --> T
 > GameObject.GetComponant<T>.value : GameObject의 Componant안에 있는 value라는 값을 호출
 
 + FindWithTag("T")
