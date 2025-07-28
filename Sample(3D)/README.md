@@ -43,8 +43,7 @@ Unity BootCamp 14th Projects
   + 이 기능을 통해 받아오는 값 --> GameObject
 >  GameObject.FindWithTag("s1") : s1이라는 Tag를 가진 Object를 검색, Object를 찾아오기에 GetComponent 사용가능
 
-### OnTriggerEnter
-#### Trigger가 Enter(작동)했을 때 호출
+### OnTriggerEnter : Trigger가 Enter(작동)했을 때 호출
 + CompareTag("T")
   + Tag를 T와 같은지 비교하는 연산
 > other.gameObject.CompareTag("T") : Trigger가 작동된 Object의 Tag를 비교, T와 동일하다면 호출
