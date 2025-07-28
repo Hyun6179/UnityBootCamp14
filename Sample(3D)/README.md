@@ -37,6 +37,11 @@ Unity BootCamp 14th Projects
   + GameObject Componant의 Data를 호출
 > GameObject.GetComponant<T>.value : GameObject의 Componant안에 있는 value라는 값을 호출
 
++ FindWithTag("T")
+  + 씬에서 해당 태그를 가지고 있는 오브젝트를 검색하는 기능
+  + 이 기능을 통해 받아오는 값 --> GameObject
+>  GameObject.FindWithTag("s1") : s1이라는 Tag를 가진 Object를 검색, Object를 찾아오기에 GetComponent 사용가능
+
 ### OnTriggerEnter
 #### Trigger가 Enter(작동)했을 때 호출
 + CompareTag("T")
