@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class Enchant : MonoBehaviour
 {
-    public GameObject trigger;
-    public Vector3 movement;
-    Vector3 stay;
-
     public Text enchant;
 
     public int level;
@@ -28,16 +24,9 @@ public class Enchant : MonoBehaviour
 
         }
     }
-
-    private void Start()
-    {
-        movement = trigger.transform.position;
-        stay = new Vector3(0, 0, 0);
-    }
-
     private void Update()
     {
-        if (movement.x != stay.x)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             LevelUp();
         }
