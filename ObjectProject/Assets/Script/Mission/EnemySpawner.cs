@@ -1,0 +1,32 @@
+using System.Collections;
+using UnityEngine;
+using static UnityEditor.PlayerSettings;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public GameObject enemyPrefab; // 몬스터 프리펩
+    public Transform spawnPoint; // 소환장소
+    public float interval = 2.0f; // 소환 간격
+
+    public EnemyPool pool; // 몬스터 저장소
+
+    private void Start()
+    {
+        StartCoroutine(Spawn());
+    }
+
+    IEnumerator Spawn()
+    {
+        while (true)
+        {
+            var enemy = pool.GetEnemy();
+            enemy.transform.position = spawnPoint.position;
+            enemy.transform.rotation = spawnPoint.rotation;
+            enemy.SetActive(true);
+            Debug.Log($"{enemyPrefab.name}이 깨어났습니다.");
+
+            yield return new WaitForSeconds(interval);
+
+        }
+    }
+}
