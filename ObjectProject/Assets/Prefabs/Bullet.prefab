@@ -128,3 +128,6 @@ MonoBehaviour:
   life_time: 2
   effect_prefab: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
   damage: 10
+  Score: {fileID: 1763430100957474820, guid: 8fcdc45d54aeb2b4c9e0cbe99b532a05, type: 3}
+  hp: 0
+  score: 20

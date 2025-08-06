@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private EnemyPool enemy_Pool;
     private Transform player_pos; // 플레이어 위치 추적
 
+
     private void Start()
     {
         player_pos = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour
     {
         while (player_pos != null)
         {
-            transform.LookAt(player_pos.position);
+            transform.LookAt(player_pos.transform.position);
             transform.position = Vector3.MoveTowards(transform.position, player_pos.position, speed * Time.deltaTime);
             yield return null;
         }

@@ -11,8 +11,10 @@ public class Bullet : MonoBehaviour
     public GameObject effect_prefab; // ¿Ã∆Â∆Æ «¡∏Æ∆È
     public int damage = 10;
 
+    public GameObject Score;
+
     public int hp;
-    public int score;
+    private int score;
 
     private BulletPool pool; // «Æ
     private Coroutine life_coroutine;
@@ -29,6 +31,10 @@ public class Bullet : MonoBehaviour
         hp = enemy.GetComponent<Enemy>().hp;
         life_coroutine = StartCoroutine(BulletReturn());
 
+    }
+
+    private void Start()
+    {
     }
 
     private void Update()
@@ -65,6 +71,7 @@ public class Bullet : MonoBehaviour
             if (hp <= damage)
             {
                 other.gameObject.SetActive(false);
+                Destroy(other.gameObject, 1.0f);
                 score += 10;
             }
             else
