@@ -87,8 +87,8 @@ public class IEnumeratorSample : MonoBehaviour
         yield break; // 순환 작업 종료
 
         //-- Unreachable Code -- (접근 불가)
-        Debug.Log("탈출 했다가 돌아옴 3");
-        yield return 3;
+        //Debug.Log("탈출 했다가 돌아옴 3");
+        //yield return 3;
     }
 
 }

@@ -20,7 +20,7 @@ public class EnemyPool : MonoBehaviour
 
             enemy.SetActive(false);
 
-            enemy.GetComponent<Enemy>().SetEnemyPool(this);
+            //enemy.GetComponent<Enemy>().SetEnemyPool(this);
 
             pool.Add(enemy);
         }
@@ -41,7 +41,7 @@ public class EnemyPool : MonoBehaviour
 
         var new_enemy = Instantiate(enemy_prefab);
         new_enemy.transform.parent = transform;
-        new_enemy.GetComponent<Enemy>().SetEnemyPool(this);
+        //new_enemy.GetComponent<Enemy>().SetEnemyPool(this);
         pool.Add(new_enemy);
         return new_enemy;
     }
