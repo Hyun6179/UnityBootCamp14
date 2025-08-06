@@ -5,17 +5,15 @@ using UnityEngine;
 // 총알에 대한 정보, 총알 반납, 총알 이동
 public class Bullet : MonoBehaviour
 {
-    public GameObject enemy;
     public float speed = 5.0f; // 총알 이동 속도
     public float life_time = 2.0f; // 총알 반납 시간
     public GameObject effect_prefab; // 이펙트 프리펩
     public int damage = 10;
+    public int count = 0;
 
     public GameObject Score;
 
-    public int hp;
-    
-
+    private GameObject Enemy;
     private BulletPool pool; // 풀
     private Coroutine life_coroutine;
 
@@ -28,7 +26,6 @@ public class Bullet : MonoBehaviour
     // 활성화 단계
     private void OnEnable()
     {
-        hp = enemy.GetComponent<Enemy>().hp;
         life_coroutine = StartCoroutine(BulletReturn());
 
     }
@@ -58,27 +55,39 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(life_time);
         ReturnPool();
-    }
+    }    
 
     private void OnTriggerEnter(Collider other)
     {
         // 부딪힌 대상이 Enemy 태그를 가지고 있는 오브젝트일 경우
         // 데미지를 입힙니다.와 같은 데미지 관련 코드 작성
+        void Critical()
+        {
+            int critical = Random.Range(0, 2);
+            if (critical > 0)
+            {
+                Debug.Log($"크리티컬 히트!");
+                damage = damage * 2;
+            }
+        }
 
         if (other.gameObject.CompareTag("Enemy"))
         {
+            //Critical();
             Debug.Log($"데미지를 {damage}만큼 입힙니다.");
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-            if (hp <= damage)
+            if (enemy.hp <= damage)
             {
                 other.gameObject.SetActive(false);
                 Destroy(other.gameObject, 1.0f);
                 Score sc = Score.GetComponent<Score>();
                 sc.score += 10;
+                count++;
             }
             else
             {
-                hp -= damage;
+                enemy.hp -= damage;
             }
         }
 

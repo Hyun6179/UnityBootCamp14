@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int hp = 3;
     public float speed;
 
     private Rigidbody rb;

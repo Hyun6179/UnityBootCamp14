@@ -10,14 +10,25 @@ public class EnemySpawner : MonoBehaviour
 
     public EnemyPool pool; // 몬스터 저장소
 
+    private GameObject Player;
+
     private void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(Spawn());
+    }
+
+    private void Update()
+    {
+        if (Player == null)
+        {
+            StopCoroutine(Spawn());
+        }
     }
 
     IEnumerator Spawn()
     {
-        while (true)
+        while (true) 
         {
             var enemy = Instantiate(enemyPrefab);
             enemy.transform.position = spawnPoint.position;
@@ -25,7 +36,6 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log($"{enemyPrefab.name}이 깨어났습니다.");
 
             yield return new WaitForSeconds(interval);
-
         }
     }
 }
