@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     public GameObject Score;
 
     public int hp;
-    private int score;
+    
 
     private BulletPool pool; // Ǯ
     private Coroutine life_coroutine;
@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        Score = GameObject.FindWithTag("Score");
     }
 
     private void Update()
@@ -72,7 +73,8 @@ public class Bullet : MonoBehaviour
             {
                 other.gameObject.SetActive(false);
                 Destroy(other.gameObject, 1.0f);
-                score += 10;
+                Score sc = Score.GetComponent<Score>();
+                sc.score += 10;
             }
             else
             {
