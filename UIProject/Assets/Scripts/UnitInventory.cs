@@ -7,7 +7,9 @@ public class UnitInventory : MonoBehaviour
 {
     string[] items;
     string[] item_inventory;
-
+    string ruby;
+    string Sapphiye;
+    string Magic;
     public Text Inventroy;
     private string gold;
     public int g = 0; // 총 골드 개수
@@ -24,16 +26,12 @@ public class UnitInventory : MonoBehaviour
     void Update()
     {
         UpgradeUI upgradeUI = GetComponent<UpgradeUI>();
-        item_inventory[upgradeUI.upgrade] = upgradeUI.materials[upgradeUI.upgrade];
-        items[0] = item_inventory[0];
-        gold = items[0].Split(' ')[0];
-        
-        
+        gold = upgradeUI.materials[0].Split(' ')[0];
+        ruby = upgradeUI.materials[1].Split('+')[1];
+        Sapphiye = upgradeUI.materials[2].Split('+')[1];
+        Magic = upgradeUI.materials[2].Split('+')[2];
 
 
-
-
-
-        Inventroy.text = $"인벤토리\n{item_inventory[0]} : {g}\n{item_inventory[1]} : {r}\n{item_inventory[2]} : {s}\n{item_inventory[3]} : {m}";
+        Inventroy.text = $"인벤토리\n{gold} : {g}\n{ruby} : {r}\n{Sapphiye} : {s}\n{Magic} : {m}";
     }
 }
