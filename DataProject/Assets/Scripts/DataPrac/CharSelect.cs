@@ -49,7 +49,6 @@ public class CharSelect : MonoBehaviour
         {
             Debug.LogWarning("해당 경로에 저장된 JSON 파일이 없습니다.");
         }
-
     }
     public void StatusSelect(int index, out int num)
     {
