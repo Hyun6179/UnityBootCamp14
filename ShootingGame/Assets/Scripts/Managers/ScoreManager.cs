@@ -9,10 +9,11 @@ public class ScoreManager : MonoBehaviour
     public Text bestText;
     public Text quest;
     public GameObject pannel;
+    public UnityEvent Quest;
 
-    private UnityEvent Quest;
     private int score;
     private int count;
+    private static int questCount = 0;
     public static ScoreManager Instance = null;
     private void Awake()
     {
@@ -20,18 +21,17 @@ public class ScoreManager : MonoBehaviour
         {
             Instance = this;
         }
+        questCount += 5;
     }
 
     private void Start()
     {
-        Quest.AddListener( NewQuest);
-        Quest.Invoke(this, EventArgs.Empty);
         SetBestText(PlayerPrefs.GetInt("Best"));
     }
 
     private void Update()
     {
-        quest.text = $"목표\n{count}";
+        quest.text = $"목표 : {questCount}\n현재 : {count}";
     }
 
     public void SetScore(int value)
@@ -51,17 +51,11 @@ public class ScoreManager : MonoBehaviour
 
     public void SetKilledEnemy()
     {
-        count--;
-        if(count == 0)
+        count++;
+        if(count == questCount)
         {
-            Quest += NewQuest;
             pannel.SetActive(true);
         }
-    }
-
-    private void NewQuest(object sender, EventArgs e)
-    {
-        count += 5;
     }
 
     private void SetScoreText(int score) => scoreText.text = $"Score : {score}";

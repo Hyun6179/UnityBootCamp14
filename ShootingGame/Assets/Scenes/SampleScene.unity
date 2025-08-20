@@ -342,8 +342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -75, y: -126.1}
-  m_SizeDelta: {x: 150, y: 200}
+  m_AnchoredPosition: {x: -119.403015, y: -126.100006}
+  m_SizeDelta: {x: 238.806, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &186557429
 MonoBehaviour:
@@ -378,7 +378,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBAA9\uD45C\n000"
+  m_Text: "\uBAA9\uD45C : 000\n000"
 --- !u!222 &186557430
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -550,6 +550,9 @@ MonoBehaviour:
   bestText: {fileID: 1089351736}
   quest: {fileID: 186557429}
   pannel: {fileID: 1069964458}
+  Quest:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &285927483
 MonoBehaviour:
   m_ObjectHideFlags: 0
