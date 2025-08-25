@@ -76,3 +76,4 @@ crashlytics-build.properties
 
 # Asset ignore
 /[Aa]ssets/CusomAssets
+/[Aa]ssets/Prefabs
