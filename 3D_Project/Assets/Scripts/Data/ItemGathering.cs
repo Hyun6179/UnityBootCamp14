@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class ItemGathering : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
     public DropTableSO[] dropTables;
+    public GameObject itemDropPrefab;
 
-    // 플레이어와 상호작용시 호출
     public void Interact(string actionName)
     {
         DropTableSO table = System.Array.Find(dropTables, t => t.actionName == actionName);
@@ -13,10 +12,19 @@ public class ItemGathering : MonoBehaviour
 
         foreach (var drop in table.drops)
         {
-            if( Random.value <= drop.dropRate)
+            if (Random.value <= drop.dropRate / 100f)
             {
                 int amount = Random.Range(drop.minAmount, drop.maxAmount + 1);
-                inventoryManager.AddItem(drop.item.itemID, amount);
+
+                // 랜덤 위치 드랍
+                Vector3 spawnPos = transform.position + new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+
+                // 아이템 드랍 프리팹 생성
+                GameObject dropObj = Instantiate(itemDropPrefab, spawnPos, Quaternion.identity);
+                ItemDrop itemDrop = dropObj.GetComponent<ItemDrop>();
+                itemDrop.SetItem(drop.item, amount);
+                Debug.Log($"Dropped {amount} x {drop.item.itemName}");
+
             }
         }
     }    

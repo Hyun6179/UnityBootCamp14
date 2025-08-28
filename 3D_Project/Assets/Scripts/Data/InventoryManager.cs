@@ -1,78 +1,110 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine.UI;
-using System;
-using UnityEditor.VersionControl;
+using UnityEngine;
+
+[System.Serializable]
+public class InventorySlotData
+{
+    public string itemID;  // 슬롯에 들어있는 아이템 ID
+    public int count;      // 슬롯에 들어있는 수량
+}
+
+[System.Serializable]
+public class PlayerInventoryData
+{
+    public InventorySlotData[] slots;  // 모든 슬롯 정보
+}
 
 public class InventoryManager : MonoBehaviour
 {
-    public Text GatheringItem;
     public static InventoryManager Instance;
-    public List<InventoryItem> inventory = new List<InventoryItem>();
+
+    [Header("슬롯 배열")]
+    public InventorySlot[] slots;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    public void AddItem(string itemID, int amount)
+    public bool AddItem(ItemDataSO item, int amount = 1)
     {
-        InventoryItem existing = inventory.Find(i => i.itemID == itemID);
-        if (existing != null) existing.count += amount;
-        else inventory.Add(new InventoryItem() { itemID = itemID, count = amount });
+       
+        foreach (var slot in slots)
+        {
+            if (slot.item != null && slot.item.itemID == item.itemID)
+            {
+                slot.AddCount(amount);
+                return true;
+            }
+        }
 
-        Debug.Log($"{itemID} {amount}개 획득!");
-        GatheringItem.text = $"{itemID} {amount}개 획득!";
+        foreach (var slot in slots)
+        {
+            if (slot.item == null)
+            {
+                slot.SetItem(item, amount);
+                return true;
+            }
+        }
 
-        //아이템 획득 시 자동저장
-        SaveLoadManager.Instance?.SaveData(GetCurrentData());
+        Debug.Log("인벤토리가 가득 찼습니다.");
+        return false;
     }
 
-    public void ToggleEquip(string itemID)
+    public bool RemoveItem(ItemDataSO item, int amount = 1)
     {
-        InventoryItem item = inventory.Find(i => i.itemID == itemID);
-        if (item == null)
+        // 1. 해당 아이템 슬롯 찾기
+        foreach (var slot in slots)
         {
-            Debug.LogWarning("해당 아이템 없음");
-            return;
+            if (slot.item != null && slot.item.itemID == item.itemID)
+            {
+                // 2. 슬롯 내 수량 감소
+                slot.count -= amount;
+
+                // 3. 수량이 0 이하이면 슬롯 비우기
+                if (slot.count <= 0)
+                {
+                    slot.ClearSlot();
+                }
+                else
+                {
+                    slot.UpdateCountUI(); // UI 갱신
+                }
+
+                return true; // 제거 완료
+            }
         }
 
-        ItemDataSO so = ItemDatabase.Instance.GetItemByID(itemID);
-        if (so == null || !so.isEquipable)
-        {
-            Debug.LogWarning("착용 불가 아이템");
-            return;
-        }
-
-        // 같은 타입 도구는 하나만 착용
-        foreach (var inv in inventory)
-        {
-            ItemDataSO invSO = ItemDatabase.Instance.GetItemByID(inv.itemID);
-            if (invSO != null && invSO.type == so.type && inv.equipped)
-                inv.equipped = false;
-        }
-
-        // 선택한 아이템 토글
-        item.equipped = true;
-
-        Debug.Log($"{so.itemName} 장착 완료");
-
-        // 장착 상태 저장
-        SaveLoadManager.Instance?.SaveData(GetCurrentData());
+        Debug.LogWarning($"인벤토리에서 '{item.name}' 아이템을 찾을 수 없습니다.");
+        return false; // 제거 실패
     }
 
 
-    public PlayerDataList GetCurrentData()
+    public void ClearInventory()
     {
-        return new PlayerDataList()
+        foreach (var slot in slots)
         {
-            playerData = new PlayerData() { nickname = "Player", gold = 0, position = Vector3.zero},
-            inventory = inventory,
-            worldState = new World_state() { time = "12:00", weather = "sun", season = "spring" }
-        };
+            slot.ClearSlot();
+        }
+    }
+
+    public List<InventoryItem> GetCurrentInventory()
+    {
+        List<InventoryItem> inventory = new List<InventoryItem>();
+
+        foreach (var slot in slots)
+        {
+            if (slot.item != null)
+            {
+                inventory.Add(new InventoryItem
+                {
+                    itemID = slot.item.itemID,
+                    count = slot.count
+                });
+            }
+        }
+
+        return inventory;
     }
 }

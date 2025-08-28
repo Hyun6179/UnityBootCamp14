@@ -45,7 +45,12 @@ public class SaveLoadManager : MonoBehaviour
         // 게임 종료시 최종 저장
         if (InventoryManager.Instance != null)
         {
-            SaveData(InventoryManager.Instance.GetCurrentData());
+            PlayerDataList data = new PlayerDataList();
+            data.inventory = InventoryManager.Instance.GetCurrentInventory();
+            //data.playerData = /* 현재 플레이어 정보 */;
+            //data.worldState = /* 현재 월드 상태 */;
+
+            SaveData(data);
         }
     }
 }

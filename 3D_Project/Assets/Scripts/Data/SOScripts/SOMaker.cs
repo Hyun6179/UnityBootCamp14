@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public enum ItemType
 {
@@ -9,6 +8,7 @@ public enum ItemType
 [CreateAssetMenu(fileName ="NewItem", menuName ="Item/Basic Item")]
 public class ItemDataSO : ScriptableObject
 {
+    public Sprite icon;
     public string itemID;
     public string itemName;
     public int maxStack;
@@ -16,25 +16,3 @@ public class ItemDataSO : ScriptableObject
     public ItemType type;
 }
 
-public class ItemDatabase : MonoBehaviour
-{
-    public static ItemDatabase Instance;
-    public ItemDataSO[] items;
-
-
-    private void Awake()
-    {
-        if(Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
-    public ItemDataSO GetItemByID(string id)
-    {
-        foreach (var item in items)
-        {
-            if (item.itemID == id)
-            return item;
-        }
-        return null;
-    }
-}

@@ -1,6 +1,5 @@
-using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InteractionTarget : MonoBehaviour
 {
@@ -12,16 +11,20 @@ public class InteractionTarget : MonoBehaviour
     private bool playerInRange = false;
 
     [Header("UI 안내")]
-    public Text interactText; // 화면에 띄울 텍스트
+    public TextMeshProUGUI interactText; // 화면에 띄울 텍스트
+    public GameObject pannel;
 
     private ItemGathering gatherSystem;
+
 
     private void Awake()
     {
         // Scene에서 ItemGathering 참조 찾기
         gatherSystem = FindObjectOfType<ItemGathering>();
         if (interactText != null)
-            interactText.gameObject.SetActive(false);
+        {
+            pannel.SetActive(false);
+        }
     }
 
     private void Update()
@@ -39,8 +42,8 @@ public class InteractionTarget : MonoBehaviour
             playerInRange = true;
             if (interactText != null)
             {
-                interactText.text = $"{actionName} [Space]를 누르세요.";
-                interactText.gameObject.SetActive(true);
+                interactText.text = $"{actionName} [Space]";
+                pannel.SetActive(true);
             }
         }
     }
@@ -52,7 +55,7 @@ public class InteractionTarget : MonoBehaviour
             playerInRange = false;
             if (interactText != null)
             {
-                interactText.gameObject.SetActive(false);
+                pannel.SetActive(false);
             }
         }
     }
