@@ -78,9 +78,9 @@ public class Player : MonoBehaviour
 
     void AStar()
     {
-        int[] dY = new int[] { -1, 0, 1, 0 };
-        int[] dX = new int[] { 0, -1, 0, 1 };
-        int[] cost = new int[] { 1, 1, 1, 1 };
+        int[] dY = new int[] { -1, 0, 1, 0, -1, 1, 1, -1 };
+        int[] dX = new int[] { 0, -1, 0, 1, -1, -1, 1, 1 };
+        int[] cost = new int[] { 10, 10, 10, 10, 14, 14, 14, 14 };
 
         // 점수 매기기
         // F = G + H
@@ -119,10 +119,10 @@ public class Player : MonoBehaviour
         PriorityQueue<PQNode> pq = new PriorityQueue<PQNode>();
 
         // 시작점 발견 (예약 진행)
-        open[PosY, PosX] = /*G = 0*/ /*H =*/ Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX);
+        open[PosY, PosX] = /*G = 0*/ /*H =*/ 10 * Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX);
         pq.Push(new PQNode()
         {
-            F = Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX),
+            F = 10 * Math.Abs(_board.DestY - PosY) + Math.Abs(_board.DestX - PosX),
             G = 0,
             Y = PosY,
             X = PosX
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
                 break;
 
             // 상하좌우 등 이동할 수 있는 좌표인지 확인해서 예약(open) 한다.
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < dY.Length; i++)
             {
                 int nextY = node.Y + dY[i];
                 int nextX = node.X + dX[i];
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
 
                 // 비용 계산
                 int g = node.G + cost[i];
-                int h = Math.Abs(_board.DestY - nextY) + Math.Abs(_board.DestX - nextX);
+                int h = 10 * Math.Abs(_board.DestY - nextY) + Math.Abs(_board.DestX - nextX);
 
                 // 다른 경록에서 다 빠른 길 이미 찾았으면 스킵
                 if (open[nextY, nextX] < g + h)
